@@ -22,6 +22,7 @@
 		1E25B2701856E36000DA8377 /* PowerHour.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E25B26F1856E35F00DA8377 /* PowerHour.storyboard */; };
 		1E25B2761856E7E200DA8377 /* HUPlaylistTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E25B2751856E7E200DA8377 /* HUPlaylistTableViewController.m */; };
 		1E25B2781856E81300DA8377 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E25B2771856E81300DA8377 /* MediaPlayer.framework */; };
+		1E25B27B1856ECD700DA8377 /* HUPlayerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E25B27A1856ECD700DA8377 /* HUPlayerTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		1E25B2741856E7E200DA8377 /* HUPlaylistTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUPlaylistTableViewController.h; sourceTree = "<group>"; };
 		1E25B2751856E7E200DA8377 /* HUPlaylistTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUPlaylistTableViewController.m; sourceTree = "<group>"; };
 		1E25B2771856E81300DA8377 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		1E25B2791856ECD700DA8377 /* HUPlayerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUPlayerTableViewController.h; sourceTree = "<group>"; };
+		1E25B27A1856ECD700DA8377 /* HUPlayerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUPlayerTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +128,8 @@
 				1E25B2451856E29100DA8377 /* Supporting Files */,
 				1E25B2741856E7E200DA8377 /* HUPlaylistTableViewController.h */,
 				1E25B2751856E7E200DA8377 /* HUPlaylistTableViewController.m */,
+				1E25B2791856ECD700DA8377 /* HUPlayerTableViewController.h */,
+				1E25B27A1856ECD700DA8377 /* HUPlayerTableViewController.m */,
 			);
 			path = PowerHour;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E25B24B1856E29100DA8377 /* main.m in Sources */,
+				1E25B27B1856ECD700DA8377 /* HUPlayerTableViewController.m in Sources */,
 				1E25B2761856E7E200DA8377 /* HUPlaylistTableViewController.m in Sources */,
 				1E25B24F1856E29100DA8377 /* HUAppDelegate.m in Sources */,
 			);
