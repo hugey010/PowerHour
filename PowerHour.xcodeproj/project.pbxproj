@@ -19,6 +19,9 @@
 		1E25B25A1856E29100DA8377 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E25B2421856E29100DA8377 /* UIKit.framework */; };
 		1E25B2621856E29100DA8377 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1E25B2601856E29100DA8377 /* InfoPlist.strings */; };
 		1E25B2641856E29100DA8377 /* PowerHourTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E25B2631856E29100DA8377 /* PowerHourTests.m */; };
+		1E25B2701856E36000DA8377 /* PowerHour.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E25B26F1856E35F00DA8377 /* PowerHour.storyboard */; };
+		1E25B2761856E7E200DA8377 /* HUPlaylistTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E25B2751856E7E200DA8377 /* HUPlaylistTableViewController.m */; };
+		1E25B2781856E81300DA8377 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E25B2771856E81300DA8377 /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,11 @@
 		1E25B25F1856E29100DA8377 /* PowerHourTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PowerHourTests-Info.plist"; sourceTree = "<group>"; };
 		1E25B2611856E29100DA8377 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1E25B2631856E29100DA8377 /* PowerHourTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PowerHourTests.m; sourceTree = "<group>"; };
+		1E25B26D1856E2CB00DA8377 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1E25B26F1856E35F00DA8377 /* PowerHour.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PowerHour.storyboard; sourceTree = "<group>"; };
+		1E25B2741856E7E200DA8377 /* HUPlaylistTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUPlaylistTableViewController.h; sourceTree = "<group>"; };
+		1E25B2751856E7E200DA8377 /* HUPlaylistTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUPlaylistTableViewController.m; sourceTree = "<group>"; };
+		1E25B2771856E81300DA8377 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E25B2781856E81300DA8377 /* MediaPlayer.framework in Frameworks */,
 				1E25B2411856E29100DA8377 /* CoreGraphics.framework in Frameworks */,
 				1E25B2431856E29100DA8377 /* UIKit.framework in Frameworks */,
 				1E25B23F1856E29100DA8377 /* Foundation.framework in Frameworks */,
@@ -77,6 +86,7 @@
 		1E25B2321856E29100DA8377 = {
 			isa = PBXGroup;
 			children = (
+				1E25B26F1856E35F00DA8377 /* PowerHour.storyboard */,
 				1E25B2441856E29100DA8377 /* PowerHour */,
 				1E25B25D1856E29100DA8377 /* PowerHourTests */,
 				1E25B23D1856E29100DA8377 /* Frameworks */,
@@ -96,6 +106,8 @@
 		1E25B23D1856E29100DA8377 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1E25B2771856E81300DA8377 /* MediaPlayer.framework */,
+				1E25B26D1856E2CB00DA8377 /* AVFoundation.framework */,
 				1E25B23E1856E29100DA8377 /* Foundation.framework */,
 				1E25B2401856E29100DA8377 /* CoreGraphics.framework */,
 				1E25B2421856E29100DA8377 /* UIKit.framework */,
@@ -111,6 +123,8 @@
 				1E25B24E1856E29100DA8377 /* HUAppDelegate.m */,
 				1E25B2501856E29100DA8377 /* Images.xcassets */,
 				1E25B2451856E29100DA8377 /* Supporting Files */,
+				1E25B2741856E7E200DA8377 /* HUPlaylistTableViewController.h */,
+				1E25B2751856E7E200DA8377 /* HUPlaylistTableViewController.m */,
 			);
 			path = PowerHour;
 			sourceTree = "<group>";
@@ -220,6 +234,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E25B2701856E36000DA8377 /* PowerHour.storyboard in Resources */,
 				1E25B2491856E29100DA8377 /* InfoPlist.strings in Resources */,
 				1E25B2511856E29100DA8377 /* Images.xcassets in Resources */,
 			);
@@ -241,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E25B24B1856E29100DA8377 /* main.m in Sources */,
+				1E25B2761856E7E200DA8377 /* HUPlaylistTableViewController.m in Sources */,
 				1E25B24F1856E29100DA8377 /* HUAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
