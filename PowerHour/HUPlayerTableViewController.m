@@ -78,7 +78,7 @@
 -(void)nextSong {
     [self.ipod pause];
     
-    if ([huSongArray count] == 0) {
+    if ([huSongArray count] <= 1) {
         [tickerTimer invalidate];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Finished" message:@"Playlist is out of songs. Faded yet?" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];
