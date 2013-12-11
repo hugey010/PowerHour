@@ -8,6 +8,7 @@
 
 #import "HUPlayerTableViewController.h"
 #import "HUSongObject.h"
+#import <AudioToolbox/AudioServices.h>
 
 @interface HUPlayerTableViewController () {
     NSMutableArray *huSongArray;
@@ -40,8 +41,8 @@
     self.navigationItem.title = [self.playlist valueForProperty:MPMediaPlaylistPropertyName];
     
     justShuffled = NO;
-    shouldRandomStart = YES;
-    shouldChime = YES;
+    shouldRandomStart = NO;
+    shouldChime = NO;
     songLength = 60;
     
     self.songLengthLabel.text = [NSString stringWithFormat:@"%d", songLength];
@@ -49,6 +50,7 @@
     self.slider.value = (float)songLength / 100.0;
     
     self.ipod = [MPMusicPlayerController iPodMusicPlayer];
+    [self.ipod pause];
     [self.ipod setShuffleMode:MPMusicShuffleModeOff];
 
     
@@ -77,6 +79,10 @@
 
 -(void)nextSong {
     [self.ipod pause];
+    
+    if (shouldChime) {
+        AudioServicesPlaySystemSound(1023);
+    }
     
     if ([huSongArray count] <= 1) {
         [tickerTimer invalidate];
@@ -211,6 +217,20 @@
 - (IBAction)randomStartSwitchValueChanged:(id)sender {
     UISwitch *sw = (UISwitch*)sender;
     shouldRandomStart = sw.isOn;
+    
+    for (HUSongObject *s in huSongArray) {
+        if (shouldRandomStart) {
+            NSTimeInterval length = [[s.song valueForProperty:MPMediaItemPropertyPlaybackDuration] doubleValue];
+            if (length <= songLength) {
+                s.start = 0;
+            } else {
+                NSTimeInterval randomStart = arc4random() % (int)(length - songLength);
+                s.start = randomStart;
+            }
+        } else {
+            s.start = 0;
+        }
+    }
 }
 
 - (IBAction)sliderValueChanged:(id)sender {

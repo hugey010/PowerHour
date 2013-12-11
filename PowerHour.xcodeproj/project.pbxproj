@@ -24,6 +24,7 @@
 		1E25B2781856E81300DA8377 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E25B2771856E81300DA8377 /* MediaPlayer.framework */; };
 		1E25B27B1856ECD700DA8377 /* HUPlayerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E25B27A1856ECD700DA8377 /* HUPlayerTableViewController.m */; };
 		1E25B27E18577E7300DA8377 /* HUSongObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E25B27D18577E7300DA8377 /* HUSongObject.m */; };
+		1E25B28018583A6700DA8377 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E25B27F18583A6700DA8377 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		1E25B27A1856ECD700DA8377 /* HUPlayerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUPlayerTableViewController.m; sourceTree = "<group>"; };
 		1E25B27C18577E7300DA8377 /* HUSongObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUSongObject.h; sourceTree = "<group>"; };
 		1E25B27D18577E7300DA8377 /* HUSongObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUSongObject.m; sourceTree = "<group>"; };
+		1E25B27F18583A6700DA8377 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E25B28018583A6700DA8377 /* AudioToolbox.framework in Frameworks */,
 				1E25B2781856E81300DA8377 /* MediaPlayer.framework in Frameworks */,
 				1E25B2411856E29100DA8377 /* CoreGraphics.framework in Frameworks */,
 				1E25B2431856E29100DA8377 /* UIKit.framework in Frameworks */,
@@ -112,6 +115,7 @@
 		1E25B23D1856E29100DA8377 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1E25B27F18583A6700DA8377 /* AudioToolbox.framework */,
 				1E25B2771856E81300DA8377 /* MediaPlayer.framework */,
 				1E25B26D1856E2CB00DA8377 /* AVFoundation.framework */,
 				1E25B23E1856E29100DA8377 /* Foundation.framework */,
