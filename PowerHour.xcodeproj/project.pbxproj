@@ -23,6 +23,7 @@
 		1E25B2761856E7E200DA8377 /* HUPlaylistTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E25B2751856E7E200DA8377 /* HUPlaylistTableViewController.m */; };
 		1E25B2781856E81300DA8377 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E25B2771856E81300DA8377 /* MediaPlayer.framework */; };
 		1E25B27B1856ECD700DA8377 /* HUPlayerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E25B27A1856ECD700DA8377 /* HUPlayerTableViewController.m */; };
+		1E25B27E18577E7300DA8377 /* HUSongObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E25B27D18577E7300DA8377 /* HUSongObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		1E25B2771856E81300DA8377 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		1E25B2791856ECD700DA8377 /* HUPlayerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUPlayerTableViewController.h; sourceTree = "<group>"; };
 		1E25B27A1856ECD700DA8377 /* HUPlayerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUPlayerTableViewController.m; sourceTree = "<group>"; };
+		1E25B27C18577E7300DA8377 /* HUSongObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUSongObject.h; sourceTree = "<group>"; };
+		1E25B27D18577E7300DA8377 /* HUSongObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUSongObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +144,8 @@
 				1E25B2471856E29100DA8377 /* InfoPlist.strings */,
 				1E25B24A1856E29100DA8377 /* main.m */,
 				1E25B24C1856E29100DA8377 /* PowerHour-Prefix.pch */,
+				1E25B27C18577E7300DA8377 /* HUSongObject.h */,
+				1E25B27D18577E7300DA8377 /* HUSongObject.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 			files = (
 				1E25B24B1856E29100DA8377 /* main.m in Sources */,
 				1E25B27B1856ECD700DA8377 /* HUPlayerTableViewController.m in Sources */,
+				1E25B27E18577E7300DA8377 /* HUSongObject.m in Sources */,
 				1E25B2761856E7E200DA8377 /* HUPlaylistTableViewController.m in Sources */,
 				1E25B24F1856E29100DA8377 /* HUAppDelegate.m in Sources */,
 			);
