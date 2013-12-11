@@ -17,6 +17,9 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"PowerHour" bundle:nil];
     self.window.rootViewController = [storyboard instantiateInitialViewController];
     
+    // disable locking the screen
+    application.idleTimerDisabled = YES;
+
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
