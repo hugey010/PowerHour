@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface HUPlayerTableViewController : UITableViewController
+@interface HUPlayerTableViewController : UITableViewController <UIAlertViewDelegate>
 
 @property (nonatomic, strong) MPMediaPlaylist *playlist;
 

@@ -14,7 +14,7 @@
     
     NSTimer *tickerTimer;
     int songLength;
-    int timePlayed;
+    NSDate *timeSongStarted;
     
     BOOL justShuffled;
     
@@ -29,6 +29,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [self.ipod stop];
+    [tickerTimer invalidate];
     [super viewWillDisappear:animated];
 }
 
@@ -36,10 +37,11 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem.title = [self.playlist valueForProperty:MPMediaPlaylistPropertyName];
+    
     justShuffled = NO;
     shouldRandomStart = YES;
     shouldChime = YES;
-    timePlayed = 0;
     songLength = 60;
     
     self.songLengthLabel.text = [NSString stringWithFormat:@"%d", songLength];
@@ -75,6 +77,13 @@
 
 -(void)nextSong {
     [self.ipod pause];
+    
+    if ([huSongArray count] == 0) {
+        [tickerTimer invalidate];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Finished" message:@"Playlist is out of songs. Faded yet?" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
 
     [huSongArray removeObjectAtIndex:0];
     [self.ipod setQueueWithItemCollection:[self playlistFromHUSongArray]];
@@ -85,16 +94,25 @@
     [self.ipod setCurrentPlaybackTime:song.start];
     [self.ipod play];
     [self.tableView reloadData];
+    timeSongStarted = [NSDate date];
 }
 
 -(void)tickerTimerFired {
-    int difference = songLength - timePlayed;
+    
+    NSTimeInterval songInterval = -1.0 * [timeSongStarted timeIntervalSinceNow];
+    
+    int difference = songLength - songInterval;
     difference = difference > 0 ? difference : 0;
     self.clockLabel.text = [NSString stringWithFormat:@"%d", difference];
-    if (difference == 0) {
+    if (difference <= 0) {
         [self nextSong];
     }
-    timePlayed++;
+}
+
+#pragma mark - UIAlertView delegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source
@@ -123,8 +141,7 @@
     artistLabel.text = [item valueForProperty:MPMediaItemPropertyArtist];
     
     if (indexPath.row == 0) {
-        UILabel *playingLabel = (UILabel*)[cell viewWithTag:23];
-        playingLabel.hidden = NO;
+        [cell setTintColor:[UIColor greenColor]];
     }
     
     return cell;
@@ -169,8 +186,13 @@
                 [self.ipod setQueueWithItemCollection:[self playlistFromHUSongArray]];
             }
             
-            [self.ipod play];
+            if (self.ipod.playbackState != MPMusicPlaybackStatePaused) {
+                timeSongStarted = [NSDate date];
+            }
             
+            HUSongObject *s = huSongArray[0];
+            [self.ipod setCurrentPlaybackTime:s.start];
+            [self.ipod play];
             
             tickerTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(tickerTimerFired) userInfo:nil repeats:YES];
 
@@ -196,4 +218,5 @@
     songLength = slider.value * 75;
     self.songLengthLabel.text = [NSString stringWithFormat:@"%d", songLength];
 }
+
 @end
