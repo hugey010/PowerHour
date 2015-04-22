@@ -52,23 +52,42 @@
     nameLabel.text = [playlist valueForProperty:MPMediaPlaylistPropertyName];
     
     NSInteger songCount = [playlist.items count];
-    songCountLabel.text = [NSString stringWithFormat:@"%d Songs", songCount];
-    
+    songCountLabel.text = [NSString stringWithFormat:@"%ld Songs", songCount];
 
     return cell;
 }
 
+- (MPMediaPlaylist*)currentlySelectedPlaylist {
+    NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+    if (path) {
+        return playlists[path.row];
+    } else {
+        return nil;
+    }
+}
+
 #pragma mark - Navigation
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    MPMediaPlaylist* playlist = [self currentlySelectedPlaylist];
+    NSLog(@"playlist items = %@", [playlist items]);
+    
+    if (playlist.items.count > 0) {
+        return YES;
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"No Songs In Playlist" message:@"Please select a list with something in it." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+        return NO;
+    }
+    
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
-    NSIndexPath *path = [self.tableView indexPathForSelectedRow];
-    MPMediaPlaylist *playlist = playlists[path.row];
+    MPMediaPlaylist *playlist = [self currentlySelectedPlaylist];
     HUPlayerTableViewController *player = (HUPlayerTableViewController*)[segue destinationViewController];
     player.playlist = playlist;
-    
 }
-
 
 @end
