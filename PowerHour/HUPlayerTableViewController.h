@@ -11,8 +11,10 @@
 
 @interface HUPlayerTableViewController : UITableViewController <UIAlertViewDelegate>
 
-@property (nonatomic, strong) MPMediaPlaylist *playlist;
+@property (nonatomic, assign) CGFloat playbackGap;
+@property (nonatomic, assign) BOOL shuffleAll;
 
+@property (nonatomic, strong) MPMediaPlaylist *playlist;
 @property (nonatomic, strong) MPMusicPlayerController *ipod;
 
 @property (weak, nonatomic) IBOutlet UILabel *clockLabel;
@@ -23,7 +25,7 @@
 - (IBAction)shuffleButtonPressed:(id)sender;
 - (IBAction)playButtonPressed:(id)sender;
 - (IBAction)chimeSwitchValueChanged:(id)sender;
-- (IBAction)randomStartSwitchValueChanged:(id)sender;
 - (IBAction)sliderValueChanged:(id)sender;
+- (IBAction)randomStartButtonPressed:(id)sender;
 
 @end

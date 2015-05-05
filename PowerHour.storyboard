@@ -85,15 +85,9 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JOf-BW-dcS">
-                                    <rect key="frame" x="267" y="79" width="51" height="31"/>
+                                    <rect key="frame" x="267" y="36" width="51" height="31"/>
                                     <connections>
                                         <action selector="chimeSwitchValueChanged:" destination="gSV-H5-0Kg" eventType="valueChanged" id="bNh-TR-l7D"/>
-                                    </connections>
-                                </switch>
-                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ZQU-ES-25N">
-                                    <rect key="frame" x="267" y="39" width="51" height="31"/>
-                                    <connections>
-                                        <action selector="randomStartSwitchValueChanged:" destination="gSV-H5-0Kg" eventType="valueChanged" id="3Me-ii-pOZ"/>
                                     </connections>
                                 </switch>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P49-zK-aey">
@@ -107,7 +101,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mll-Gm-RJ0">
-                                    <rect key="frame" x="153" y="115" width="167" height="22"/>
+                                    <rect key="frame" x="169" y="111" width="151" height="30"/>
                                     <state key="normal" title="Shuffle Songs">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -115,13 +109,8 @@
                                         <action selector="shuffleButtonPressed:" destination="gSV-H5-0Kg" eventType="touchUpInside" id="MHr-z4-nl7"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Random Start" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fh9-oC-mM8">
-                                    <rect key="frame" x="152" y="44" width="109" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chime" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfL-dh-ElT">
-                                    <rect key="frame" x="152" y="84" width="109" height="21"/>
+                                    <rect key="frame" x="152" y="41" width="109" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -136,6 +125,15 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qXy-mc-Cbb">
+                                    <rect key="frame" x="169" y="75" width="150" height="30"/>
+                                    <state key="normal" title="Random Start: Off">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="randomStartButtonPressed:" destination="gSV-H5-0Kg" eventType="touchUpInside" id="Elz-6l-B0M"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>

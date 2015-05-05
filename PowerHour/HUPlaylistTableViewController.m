@@ -10,9 +10,9 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "HUPlayerTableViewController.h"
 
-@interface HUPlaylistTableViewController () {
-    NSArray *playlists;
-}
+@interface HUPlaylistTableViewController ()
+
+    @property (nonatomic, strong) NSArray *playlists;
 
 @end
 
@@ -25,7 +25,7 @@
     [self.navigationItem setTitle:@"Power Hourish"];
     
     MPMediaQuery *myPlaylistsQuery = [MPMediaQuery playlistsQuery];
-    playlists = [myPlaylistsQuery collections];
+    self.playlists = [myPlaylistsQuery collections];
 }
 
 #pragma mark - Table view data source
@@ -37,7 +37,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [playlists count];
+    return [self.playlists count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -47,7 +47,7 @@
     UILabel *nameLabel = (UILabel*)[cell viewWithTag:21];
     UILabel *songCountLabel = (UILabel*)[cell viewWithTag:22];
     
-    MPMediaPlaylist *playlist = playlists[indexPath.row];
+    MPMediaPlaylist *playlist = self.playlists[indexPath.row];
     
     nameLabel.text = [playlist valueForProperty:MPMediaPlaylistPropertyName];
     
@@ -60,7 +60,7 @@
 - (MPMediaPlaylist*)currentlySelectedPlaylist {
     NSIndexPath *path = [self.tableView indexPathForSelectedRow];
     if (path) {
-        return playlists[path.row];
+        return self.playlists[path.row];
     } else {
         return nil;
     }
@@ -81,7 +81,6 @@
     
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
