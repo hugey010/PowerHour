@@ -7,6 +7,14 @@
 //
 
 #import "HUAppDelegate.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "HUPlayerTableViewController.h"
+
+@interface HUAppDelegate()
+
+@property (nonatomic, assign) UIBackgroundTaskIdentifier bgTask;
+
+@end
 
 @implementation HUAppDelegate
 
@@ -33,8 +41,34 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    if ([HUPlayerTableViewController isCurrentlyPlaying]) {
+        @weakify(self)
+        self.bgTask = [application beginBackgroundTaskWithName:@"Skip Songs" expirationHandler:^{
+            @strongify(self)
+            
+            @weakify(self)
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)([HUPlayerTableViewController timeLeftForCurrentSong] * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                @strongify(self)
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"nextSong" object:nil];
+               
+                // TODO: use song count from controller static methods
+                for (NSInteger i = 1; i <= 10; i++) {
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)([HUPlayerTableViewController songInterval] * i * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"nextSong" object:nil];
+                        
+                        if (i == 10) {
+                            [application endBackgroundTask:self.bgTask];
+                            self.bgTask = UIBackgroundTaskInvalid;
+                        }
+                    });
+                }
+                
+                
+            });
+            
+        }];
+    }
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

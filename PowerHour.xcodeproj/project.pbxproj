@@ -238,6 +238,13 @@
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Hugey;
 				TargetAttributes = {
+					1E25B23A1856E29100DA8377 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					1E25B2551856E29100DA8377 = {
 						TestTargetID = 1E25B23A1856E29100DA8377;
 					};

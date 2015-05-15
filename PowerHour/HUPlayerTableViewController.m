@@ -38,10 +38,33 @@
 
 @implementation HUPlayerTableViewController
 
+// static methods
+
+static BOOL currentlyPlaying = NO;
++ (BOOL)isCurrentlyPlaying {
+    return currentlyPlaying;
+}
+
+static NSTimeInterval currentSongInterval = 0.0;
++ (NSTimeInterval)songInterval {
+    return currentSongInterval;
+}
+
+static NSTimeInterval timeLeft = 0.0;
++ (NSTimeInterval)timeLeftForCurrentSong {
+    return timeLeft;
+}
+
+static NSInteger songsLeft = 0;
++ (NSInteger)numberOfSongsLeft {
+    return songsLeft;
+}
 
 -(void)viewWillDisappear:(BOOL)animated {
     [self.ipod stop];
     [self.tickerTimer invalidate];
+
+    currentlyPlaying = NO;
     
     [super viewWillDisappear:animated];
 }
@@ -50,12 +73,14 @@
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextSong) name:@"nextSong" object:nil];
+    
     self.navigationItem.title = [self.playlist valueForProperty:MPMediaPlaylistPropertyName];
    
-    self.shuffleAll = NO;
     self.shouldRandomStart = NO;
     self.shouldChime = NO;
     self.songLength = 60;
+    self.playbackGap = 1.0f;
     
     self.songLengthLabel.text = [NSString stringWithFormat:@"%lu", (long)self.songLength];
     self.clockLabel.text = [NSString stringWithFormat:@"%lu", (long)self.songLength];
@@ -65,7 +90,9 @@
     [self.ipod pause];
     [self.ipod setShuffleMode:MPMusicShuffleModeOff];
     [self.ipod beginGeneratingPlaybackNotifications];
-
+    
+    MPVolumeView* vv = [[MPVolumeView alloc] initWithFrame:self.volumeView.bounds];
+    [self.volumeView addSubview:vv];
     
     // convert playlist to trimmed song objects
     self.huSongArray = [NSMutableArray array];
@@ -75,7 +102,6 @@
         [self.huSongArray addObject:customSong];
     }
     self.allSongsArray = [self.huSongArray copy];
-    
     
     [self reset];
 }
@@ -96,6 +122,7 @@
     [self.ipod stop];
     [self.ipod setShuffleMode:MPMusicShuffleModeOff];
     [self.ipod beginGeneratingPlaybackNotifications];
+    currentlyPlaying = NO;
 }
 
 - (void)play {
@@ -103,28 +130,29 @@
     self.timeSongStarted = [NSDate date];
     
     HUSongObject *s = self.huSongArray[0];
+    MPMediaItemCollection* collection = [MPMediaItemCollection collectionWithItems:@[s.song]];
+    [self.ipod setQueueWithItemCollection:collection];
     [self.ipod setNowPlayingItem:s.song];
     [self.ipod setCurrentPlaybackTime:s.start];
     
     [self.ipod play];
-}
-
-- (void)shuffle {
-    NSInteger startIndex = 0;
-    if (self.shuffleAll) {
-        startIndex = 1;
-    }
+    
+    currentlyPlaying = YES;
 }
 
 - (void)nextSong {
     [self.ipod pause];
     [self.tickerTimer invalidate];
     
+    // play the chime if on
+    [self playChime];
+    
     // play delay before actually playing song.
     @weakify(self)
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.playbackGap * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         @strongify(self)
         if (self.huSongArray.count > 0) {
+            [self.huSongArray removeObjectAtIndex:0];
             [self play];
             
         } else {
@@ -132,6 +160,12 @@
             [alert show];
         }
     });
+}
+
+- (void)playChime {
+    if (self.shouldChime) {
+        AudioServicesPlaySystemSound(1328);
+    }
 }
 
 - (void)dealloc {
@@ -148,43 +182,18 @@
     return list;
 }
 
-/*
--(void)nextSong {
-    [self.ipod pause];
-    
-    if (self.shouldChime) {
-        AudioServicesPlaySystemSound(1023);
-    }
-    
-    if ([self.huSongArray count] <= 1) {
-        [self.tickerTimer invalidate];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Finished" message:@"Playlist is out of songs. Faded yet?" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [alert show];
-        return;
-    }
-
-    [self.huSongArray removeObjectAtIndex:0];
-    [self.ipod setQueueWithItemCollection:[self playlistFromHUSongArray]];
-
-    HUSongObject *song = self.huSongArray[0];
-    
-    [self.ipod setNowPlayingItem:song.song];
-    [self.ipod setCurrentPlaybackTime:song.start];
-    [self.ipod play];
-    [self.tableView reloadData];
-    self.timeSongStarted = [NSDate date];
-}
- */
-
 -(void)tickerTimerFired {
     NSTimeInterval songInterval = -1.0 * [self.timeSongStarted timeIntervalSinceNow];
-    
+   
     int difference = self.songLength - songInterval;
     difference = difference > 0 ? difference : 0;
     self.clockLabel.text = [NSString stringWithFormat:@"%d", difference];
     if (difference <= 0) {
         [self nextSong];
     }
+    
+    timeLeft = difference;
+    currentSongInterval = self.songLength;
 }
 
 #pragma mark - UIAlertView delegate
@@ -236,32 +245,38 @@
     return cell;
 }
 
-#pragma mark - MPMusicPlayerController Notifications
-
-
 - (IBAction)shuffleButtonPressed:(id)sender {
     UIActionSheet* sheet = [[UIActionSheet alloc] bk_initWithTitle:@"Shuffle"];
     
-    
-   
-    /*
-    if (self.shuffleAll) {
-        [self reset];
-    }
-    
-    NSUInteger count = [self.huSongArray count];
-    for (NSUInteger i = 0; i < count; ++i) {
-        NSInteger nElements = count - i;
-        NSInteger n = arc4random_uniform((UInt32)nElements) + i;
-        if (!self.shuffleAll && self.ipod.playbackState == MPMusicPlaybackStatePlaying && (i == 0 || n == 0)) {
-            // dont shuffle the first song if it is playing
-            continue;
+    @weakify(self)
+    void (^shuffle)(BOOL) = ^(BOOL shuffleAll) {
+        @strongify(self)
+        
+        NSUInteger count = [self.huSongArray count];
+        for (NSUInteger i = 0; i < count; ++i) {
+            NSInteger nElements = count - i;
+            NSInteger n = arc4random_uniform((UInt32)nElements) + i;
+            if (!shuffleAll && (i == 0 || n == 0)) {
+                // dont shuffle the first song if it is playing
+                continue;
+            }
+            [self.huSongArray exchangeObjectAtIndex:i withObjectAtIndex:n];
         }
-        [self.huSongArray exchangeObjectAtIndex:i withObjectAtIndex:n];
-    }
-     */
+        
+        [self.tableView reloadData];
+    };
+   
+    [sheet bk_addButtonWithTitle:@"Shuffle All and Reset" handler:^{
+        @strongify(self)
+        [self reset];
+        shuffle(YES);
+    }];
     
-    [self.tableView reloadData];
+    [sheet bk_addButtonWithTitle:@"Shuffle Remaining" handler:^{
+        shuffle(NO);
+    }];
+    
+    [sheet showInView:self.view];
 }
 
 - (IBAction)playButtonPressed:(id)sender {
@@ -269,6 +284,7 @@
         case MPMusicPlaybackStatePlaying: {
             [self.playButton setTitle:@"Play" forState:UIControlStateNormal];
             [self.ipod pause];
+            currentlyPlaying = NO;
     
             [self.tickerTimer invalidate];
             
@@ -278,18 +294,7 @@
         case MPMusicPlaybackStateStopped:
         case MPMusicPlaybackStateInterrupted: {
             [self.playButton setTitle:@"Pause" forState:UIControlStateNormal];
-            
             [self play];
-            
-            
-            self.timeSongStarted = [NSDate date];
-            
-            HUSongObject *s = self.huSongArray[0];
-            [self.ipod setCurrentPlaybackTime:s.start];
-            [self.ipod play];
-            
-            self.tickerTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(tickerTimerFired) userInfo:nil repeats:YES];
-
             break;
         }
         default:
@@ -351,6 +356,7 @@
 - (IBAction)sliderValueChanged:(id)sender {
     UISlider *slider = (UISlider*)sender;
     self.songLength = slider.value * 75;
+    
     self.songLengthLabel.text = [NSString stringWithFormat:@"%lu", (long)self.songLength];
 }
 

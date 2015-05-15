@@ -12,7 +12,6 @@
 @interface HUPlayerTableViewController : UITableViewController <UIAlertViewDelegate>
 
 @property (nonatomic, assign) CGFloat playbackGap;
-@property (nonatomic, assign) BOOL shuffleAll;
 
 @property (nonatomic, strong) MPMediaPlaylist *playlist;
 @property (nonatomic, strong) MPMusicPlayerController *ipod;
@@ -20,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *clockLabel;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UILabel *songLengthLabel;
+@property (weak, nonatomic) IBOutlet UIView *volumeView;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 
 - (IBAction)shuffleButtonPressed:(id)sender;
@@ -27,5 +27,11 @@
 - (IBAction)chimeSwitchValueChanged:(id)sender;
 - (IBAction)sliderValueChanged:(id)sender;
 - (IBAction)randomStartButtonPressed:(id)sender;
+
+// for the app delegate to know to use background tasks or not
++ (BOOL)isCurrentlyPlaying;
++ (NSTimeInterval)songInterval;
++ (NSTimeInterval)timeLeftForCurrentSong;
++ (NSInteger)numberOfSongsLeft;
 
 @end
